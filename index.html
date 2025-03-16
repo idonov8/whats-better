@@ -1,66 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>What's Better</title>
- <style>
- body {
- font-family: Arial, sans-serif;
- text-align: center;
- margin: 0;
- padding: 20px;
- }
- #options-container {
- display: flex;
- justify-content: center;
- gap: 20px;
- margin-top: 50px;
- }
- .option {
- cursor: pointer;
- width: 300px;
- padding: 20px;
- border: 2px solid #ddd;
- border-radius: 10px;
- transition: all 0.3s ease;
- }
- .option:hover {
- transform: scale(1.05);
- box-shadow: 0 0 15px rgba(0,0,0,0.2);
- }
- .option img {
- width: 100%;
- height: 200px;
- object-fit: cover;
- border-radius: 5px;
- }
- .option h3 {
- margin-top: 10px;
- }
- .results {
- display: none;
- margin-top: 50px;
- }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What's Better</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
- <h1>What's Better</h1>
- <div id="options-container">
- <div class="option card" id="option1">
- <img src="" alt="Option 1">
- <h3></h3>
- </div>
- <div class="option card" id="option2">
- <img src="" alt="Option 2">
- <h3></h3>
- </div>
- </div>
- <div class="results">
- <h2>That's better!</h2>
- <ol id="results-list"></ol>
- </div>
- <p> Want to add more options? Please contribute to the project <a target="_blank" href="https://github.com/idonov8/whats-better/blob/main/data.json"> here </a>
- <script src="app.js"></script>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 font-sans">
+  <div class="container mx-auto max-w-6xl">
+    <h1 class="text-4xl font-bold text-gray-800 mb-12">What's Better</h1>
+    
+    <div id="options-container" class="flex flex-col md:flex-row justify-center items-center gap-8 mb-12">
+      <div class="option card group w-full md:w-96 cursor-pointer" id="option1">
+        <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 transform hover:scale-105">
+          <img src="" alt="Option 1" class="w-full h-48 object-cover rounded-lg mb-4">
+          <h3 class="text-xl font-semibold text-gray-700"></h3>
+        </div>
+      </div>
+      
+      <div class="option card group w-full md:w-96 cursor-pointer" id="option2">
+        <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 transform hover:scale-105">
+          <img src="" alt="Option 2" class="w-full h-48 object-cover rounded-lg mb-4">
+          <h3 class="text-xl font-semibold text-gray-700"></h3>
+        </div>
+      </div>
+    </div>
+    
+    <div class="results hidden">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">That's better!</h2>
+      <ol id="results-list" class="space-y-2 text-lg text-gray-700 list-decimal list-inside"></ol>
+    </div>
+    
+    <p class="mt-8 text-gray-600">
+      Want to add more options? Please contribute to the project 
+      <a target="_blank" href="https://github.com/idonov8/whats-better/blob/main/data.json" 
+         class="text-blue-600 hover:text-blue-800 underline transition-colors">here</a>
+    </p>
+  </div>
+  
+  <script src="app.js"></script>
 </body>
 </html>
