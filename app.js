@@ -76,13 +76,12 @@ function getRandomOption() {
 
 function showResults() {
 document.getElementById('options-container').style.display = 'none';
-
  resultsSection.style.display = 'block';
  resultsList.innerHTML = '';
-	console.log("choices:", choices)
- choices.forEach(choice => {
- const li = document.createElement('li');
- li.textContent = choice.name;
- resultsList.appendChild(li);
+ const uniqueChoices = [...new Set(choices)];
+ uniqueChoices.reverse().forEach(choice => {
+	const li = document.createElement('li');
+	li.textContent = choice.name;
+ 	resultsList.appendChild(li);
  });
 }
