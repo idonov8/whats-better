@@ -1,0 +1,62 @@
+[
+ {
+ "id": 1,
+ "category": "things",
+ "name": "Bose QuietComfort 35 II headphones",
+ "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+ },
+ {
+ "id": 2,
+ "category": "experiences",
+ "name": "Watching sunrise from a hot air balloon",
+ "image_url": "https://images.unsplash.com/photo-1507608158173-3c7df3c6e63c"
+ },
+ {
+ "id": 3,
+ "category": "food",
+ "name": "Authentic sushi platter",
+ "image_url": "https://images.unsplash.com/photo-1553621042-f6e147245754"
+ },
+ {
+ "id": 4,
+ "category": "places",
+ "name": "Santorini sunset view",
+ "image_url": "https://images.unsplash.com/photo-1506905925346-21bda4df32a7"
+ },
+ {
+ "id": 5,
+ "category": "activities",
+ "name": "Scuba diving in coral reef",
+ "image_url": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0"
+ },
+ {
+ "id": 6,
+ "category": "things",
+ "name": "Apple AirPods Pro",
+ "image_url": "https://images.unsplash.com/photo-1590658006821-04f4008d1bca"
+ },
+ {
+ "id": 7,
+ "category": "things",
+ "name": "Sony PlayStation 5",
+ "image_url": "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3"
+ },
+ {
+ "id": 8,
+ "category": "things",
+ "name": "Instant Pot",
+ "image_url": "https://images.unsplash.com/photo-1603791445824-0050fdf6e5e1"
+ },
+ {
+ "id": 9,
+ "category": "things",
+ "name": "Dyson V11 vacuum",
+ "image_url": "https://images.unsplash.com/photo-1587049016823-69ef9d68ce48"
+ },
+ {
+ "id": 10,
+ "category": "things",
+ "name": "Kindle Paperwhite",
+ "image_url": "https://images.unsplash.com/photo-1607773967201-5d5e96b7e5e7"
+ }
+]
