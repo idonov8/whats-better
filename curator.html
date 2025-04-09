@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"What's Better?" Curator</title>
+    <!-- Add Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="max-w-3xl mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">What's Better? - Curator</h1>
+        <div class="">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Add a new item to the database!</h2>
+            <p class="text-gray-600 mb-4">
+                This is a simple tool to add new items to the database.
+			 <br>After saving the new database, please commit your new items to the project using the GitHub link below.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Item Name:</label>
+                <input type="text" id="name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="imageUrl" class="block text-sm font-medium text-gray-700 mb-1">Image URL (optional):</label>
+                <input type="url" id="imageUrl" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="mb-6">
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category:</label>
+                <select id="category" onchange="toggleNewCategory()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="new">Add New Category</option>
+                </select>
+                <div id="newCategoryInput" class="hidden mt-3">
+                    <input type="text" id="newCategory" placeholder="Enter new category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <div class="flex space-x-4">
+                <button onclick="addItem()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                    Add Item
+                </button>
+                <button onclick="saveDatabase()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                    Save Database
+                </button>
+            </div>
+        </div>
+
+        <div class="p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Commit your new data to the project!</h2>
+            <a href="https://github.com/idonov8/whats-better/blob/main/data.json" class="text-blue-600 hover:text-blue-800 underline">
+                The project
+            </a>
+        </div>
+
+        <div id="itemList" class="space-y-4"></div>
+
+    <script>
+        let items = [];
+        let nextId = 1;
+
+        // Load existing data, set nextId, and populate categories
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const maxId = data.reduce((max, item) => Math.max(max, item.id), 0);
+                nextId = maxId + 1;
+                
+                // Extract unique categories
+                const categories = [...new Set(data.map(item => item.category))];
+                
+                // Get the category select element
+                const categorySelect = document.getElementById('category');
+                
+                // Clear existing options except 'Add New Category'
+                while (categorySelect.firstChild) {
+                    categorySelect.removeChild(categorySelect.firstChild);
+                }
+                
+                // Add categories from data
+                categories.sort().forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                    categorySelect.appendChild(option);
+                });
+                
+                // Add the 'Add New Category' option at the end
+                const newOption = document.createElement('option');
+                newOption.value = 'new';
+                newOption.textContent = 'Add New Category';
+                categorySelect.appendChild(newOption);
+            })
+            .catch(error => console.error('Error loading data.json:', error));
+
+        function toggleNewCategory() {
+            const categorySelect = document.getElementById('category');
+            const newCategoryInput = document.getElementById('newCategoryInput');
+            newCategoryInput.style.display = 
+                categorySelect.value === 'new' ? 'block' : 'none';
+        }
+
+        function addItem() {
+            const name = document.getElementById('name').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const categorySelect = document.getElementById('category');
+            let category = categorySelect.value;
+
+            if (!name) {
+                alert('Please enter an item name');
+                return;
+            }
+
+            if (category === 'new') {
+                category = document.getElementById('newCategory').value;
+                if (!category) {
+                    alert('Please enter a new category name');
+                    return;
+                }
+                // Add the new category to the dropdown
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.insertBefore(option, categorySelect.lastElementChild);
+            }
+
+            const item = {
+                id: nextId++,
+                name,
+                category,
+                image_url: imageUrl || null
+            };
+
+            items.push(item);
+            displayItems();
+            clearForm();
+        }
+
+        function displayItems() {
+            const itemList = document.getElementById('itemList');
+            itemList.innerHTML = '';
+
+            items.forEach(item => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                itemCard.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p>Category: ${item.category}</p>
+                    ${item.image_url ? `<p>Image URL: ${item.image_url}</p>` : ''}
+                    <button onclick="removeItem(${item.id})">Remove</button>
+                `;
+                itemList.appendChild(itemCard);
+            });
+        }
+
+        function removeItem(id) {
+            items = items.filter(item => item.id !== id);
+            displayItems();
+        }
+
+        function clearForm() {
+            document.getElementById('name').value = '';
+            document.getElementById('imageUrl').value = '';
+            document.getElementById('category').value = 'food';
+            document.getElementById('newCategoryInput').style.display = 'none';
+            document.getElementById('newCategory').value = '';
+        }
+
+        function saveDatabase() {
+            if (items.length === 0) {
+                alert('Please add at least one item to the database');
+                return;
+            }
+
+            const jsonContent = JSON.stringify(items, null, 2);
+            const blob = new Blob([jsonContent], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'database.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
