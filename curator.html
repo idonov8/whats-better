@@ -7,6 +7,29 @@
     <!-- Add Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<style>
+    .item-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        margin-bottom: 16px;
+        transition: transform 0.2s ease-in-out;
+    }
+    .remove-button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+</style>
 <body class="bg-gray-100 min-h-screen py-8">
     <div class="max-w-3xl mx-auto px-4">
         <h1 class="text-3xl font-bold text-gray-800 mb-8">What's Better? - Curator</h1>
@@ -149,10 +172,12 @@
                 const itemCard = document.createElement('div');
                 itemCard.className = 'item-card';
                 itemCard.innerHTML = `
-                    <h3>${item.name}</h3>
-                    <p>Category: ${item.category}</p>
-                    ${item.image_url ? `<p>Image URL: ${item.image_url}</p>` : ''}
-                    <button onclick="removeItem(${item.id})">Remove</button>
+                    <div>
+                        <h3>${item.name}</h3>
+                        <p>Category: ${item.category}</p>
+                        ${item.image_url ? `<p>Image URL: ${item.image_url}</p>` : ''}
+                    </div>
+                    <button class="remove-button" onclick="removeItem(${item.id})">Remove</button>
                 `;
                 itemList.appendChild(itemCard);
             });
